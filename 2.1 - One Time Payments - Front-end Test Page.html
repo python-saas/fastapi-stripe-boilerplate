@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy Product</title>
+</head>
+<body>
+    <h1>Buy Our Product</h1>
+    <button onclick="buyProduct('ebook')">Buy eBook - $29</button>
+    <button onclick="buyProduct('course')">Buy Course - $99</button>
+    <button onclick="buyProduct('template')">Buy Template - $79</button>
+
+    <script>
+        async function buyProduct(productId) {
+            const response = await fetch('/create-checkout-session', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    product_id: productId
+                })
+            });
+            const {checkout_url} = await response.json();
+            window.location.href = checkout_url;
+        }
+    </script>
+</body>
+</html>
